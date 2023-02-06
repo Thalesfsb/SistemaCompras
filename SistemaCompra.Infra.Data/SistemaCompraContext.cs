@@ -29,11 +29,6 @@ namespace SistemaCompra.Infra.Data
                 .WithOwner()
                 .HasForeignKey();
 
-            modelBuilder.Entity<ProdutoAgg.Produto>()
-                .HasData(
-                    new ProdutoAgg.Produto("Produto01", "Descricao01", "Madeira", 100)
-                );
-
             modelBuilder.Entity<SolicitacaoAgg.CondicaoPagamento>()
                 .HasNoKey();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Logging;
 using SistemaCompra.Domain.Core;
 using SistemaCompra.Domain.Core.Model;
@@ -15,20 +16,26 @@ namespace SistemaCompra.Infra.Data
 
         public SistemaCompraContext(DbContextOptions options) : base(options) { }
         public DbSet<ProdutoAgg.Produto> Produtos { get; set; }
+        public DbSet<SolicitacaoAgg.CondicaoPagamento> condicaoPagamentos { get; set; }
+        public DbSet<SolicitacaoAgg.Item> Items { get; set; }
+        public DbSet<SolicitacaoAgg.NomeFornecedor> nomeFornecedors { get; set; }
+        public DbSet<SolicitacaoAgg.SolicitacaoCompra> solicitacaoCompras { get; set; }
+        public DbSet<SolicitacaoAgg.UsuarioSolicitante> usuarioSolicitantes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProdutoAgg.Produto>()
-                //.OwnsOne(e => e.Preco)
+                .OwnsOne(e => e.Preco)
+                .WithOwner()
+                .HasForeignKey();
+
+            modelBuilder.Entity<ProdutoAgg.Produto>()
                 .HasData(
                     new ProdutoAgg.Produto("Produto01", "Descricao01", "Madeira", 100)
                 );
 
-            modelBuilder.Entity<SolicitacaoAgg.NomeFornecedor>()
-            .HasKey(o => o.Id);
-
-            modelBuilder.Entity<SolicitacaoAgg.UsuarioSolicitante>()
-               .HasKey(o => o.Id);
+            modelBuilder.Entity<SolicitacaoAgg.CondicaoPagamento>()
+                .HasNoKey();
 
             modelBuilder.Ignore<Event>();
 
@@ -38,7 +45,7 @@ namespace SistemaCompra.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(loggerFactory)  
+            optionsBuilder.UseLoggerFactory(loggerFactory)
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(@"Server=DESKTOP-G4L0D5R;Database=SistemaCompraDb;Trusted_Connection=True;MultipleActiveResultSets=true");
         }

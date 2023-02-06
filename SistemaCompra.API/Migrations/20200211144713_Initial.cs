@@ -96,27 +96,6 @@ namespace SistemaCompra.API.Migrations
                });
             #endregion
 
-            //#region Money
-            //migrationBuilder.CreateTable(
-            //   name: "Money",
-            //   columns: table => new
-            //   {
-            //       Id = table.Column<Guid>(nullable: false),
-            //       Value = table.Column<decimal>(nullable: false),
-            //       ProdutoId = table.Column<Guid>(nullable: false),
-            //   },
-            //   constraints: table =>
-            //   {
-            //       table.PrimaryKey("PK_Money", x => x.Id);
-            //       table.ForeignKey(
-            //            name: "FK_Money_Produto_ProdutoId",
-            //            column: x => x.ProdutoId,
-            //            principalTable: "Produto",
-            //            principalColumn: "Id",
-            //            onDelete: ReferentialAction.Restrict);
-            //   });
-            //#endregion
-
             #region Indexs
             migrationBuilder.CreateIndex(
                 name: "IX_Item_ProdutoId",
